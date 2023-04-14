@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Latest Posts",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 20, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMar 17, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 20, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMar 17, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\n  \n\n\n\n\nTHE BIG TEN SUCKS AT MARCH MADNESS\n\n\n\n\n\n\n\nppg\n\n\nsos\n\n\nsweetsixteen\n\n\n\n\n\n\n\n\n\n\n\nApr 16, 2022\n\n\nGREG JOHNSON\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -37,6 +37,13 @@
   {
     "objectID": "the-big-ten-sucks-at-march-madness/index.html",
     "href": "the-big-ten-sucks-at-march-madness/index.html",
+    "title": "THE BIG TEN SUCKS AT MARCH MADNESS",
+    "section": "",
+    "text": "Text Example One\n\n\nCode\nlibrary(tidyverse)\n\nstats <- read_csv(\"http://mattwaite.github.io/sportsdatafiles/stats23.csv\")\n\nteams <- c(\"Nebraska\", \"Iowa\", \"Northwestern\", \"Minnesota\", \"Wisconsin\", \"Illinois\", \"Indiana\", \"Purdue\", \"Michigan\", \"Michigan State\", \"Ohio State\", \"Penn State\", \"Rutgers\", \"Maryland\")\n\ntournament <- c(\"Iowa\", \"Northwestern\", \"Maryland\", \"Indiana\", \"Penn State\", \"Illinois\", \"Michigan State\", \"Purdue\")\n\nbig <- stats %>% filter(School %in% teams)\n\ndance <- stats %>% filter(School %in% tournament)\n\nmi <- stats %>% filter(School == \"Michigan State\")\n\nggplot() +\n  geom_point(data=stats, aes(x=ForPoints/Games, y=OppPoints/Games), color=\"grey\") +\n  geom_point(data=big, aes(x=ForPoints/Games, y=OppPoints/Games), color=\"blue\") +\n  geom_point(data=mi, aes(x=ForPoints/Games, y=OppPoints/Games), color=\"#18453B\") +\n  labs(\n    title=\"Offensive and Defensive Points Per Game\",\n    subtitle=\"Big Ten likes to play defense\",\n    x=\"Points Per Game\", \n    y=\"Opponent Points Per Game\",\n    caption=\"Source: Sports Reference | By Greg Johnson\")+\n  theme_minimal() +\n  theme(\n    plot.title = element_text(size = 15, face = \"bold\")\n    )"
+  },
+  {
+    "objectID": "posts/the-big-ten-sucks-at-march-madness/index.html",
+    "href": "posts/the-big-ten-sucks-at-march-madness/index.html",
     "title": "THE BIG TEN SUCKS AT MARCH MADNESS",
     "section": "",
     "text": "Text Example One\n\n\nCode\nlibrary(tidyverse)\n\nstats <- read_csv(\"http://mattwaite.github.io/sportsdatafiles/stats23.csv\")\n\nteams <- c(\"Nebraska\", \"Iowa\", \"Northwestern\", \"Minnesota\", \"Wisconsin\", \"Illinois\", \"Indiana\", \"Purdue\", \"Michigan\", \"Michigan State\", \"Ohio State\", \"Penn State\", \"Rutgers\", \"Maryland\")\n\ntournament <- c(\"Iowa\", \"Northwestern\", \"Maryland\", \"Indiana\", \"Penn State\", \"Illinois\", \"Michigan State\", \"Purdue\")\n\nbig <- stats %>% filter(School %in% teams)\n\ndance <- stats %>% filter(School %in% tournament)\n\nmi <- stats %>% filter(School == \"Michigan State\")\n\nggplot() +\n  geom_point(data=stats, aes(x=ForPoints/Games, y=OppPoints/Games), color=\"grey\") +\n  geom_point(data=big, aes(x=ForPoints/Games, y=OppPoints/Games), color=\"blue\") +\n  geom_point(data=mi, aes(x=ForPoints/Games, y=OppPoints/Games), color=\"#18453B\") +\n  labs(\n    title=\"Offensive and Defensive Points Per Game\",\n    subtitle=\"Big Ten likes to play defense\",\n    x=\"Points Per Game\", \n    y=\"Opponent Points Per Game\",\n    caption=\"Source: Sports Reference | By Greg Johnson\")+\n  theme_minimal() +\n  theme(\n    plot.title = element_text(size = 15, face = \"bold\")\n    )"
