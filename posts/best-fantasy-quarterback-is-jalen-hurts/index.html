@@ -213,9 +213,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>Every fall, millions of Americans compete against their friends, families and coworkers in Fantasy Football. Each participant, dubbed a team manager, drafts players in different football skill positions from different NFL teams in hopes that the players will lead him or her to victory. Players gain points for the manager in different ways. Touchdowns, yards and catches are all worth different values for the manager, and every week, the manager competes against a different manager in their league to score the most points.</p>
-<p>The position that scores the most points is typically the quarterback. Many managers try to draft quarterbacks that put up good stats such as Patrick Mahomes or Josh Allen in the early rounds, but in 2022, there was a quarterback who outperformed everyone else in many ways that lead many managers to the fantasy playoffs.</p>
-<p>When it comes to the ideal fantasy quarterback, athleticism and the ability to both pass and run are much more important than winning games for their team. In fact, whether the players’ NFL teams win or lose is irrelevant toward fantasy points. NFL players, and quarterbacks especially, cannot play forever, especially with good fantasy stats. In 2022, the top four quarterbacks in fantasy football were all under the age of 28, and they outscored the rest of the field significantly.</p>
+<p>Every fall, millions of Americans compete against their friends, families and coworkers in Fantasy Football. Each participant, dubbed a team manager, drafts players in different football skill positions from different NFL teams in hopes that the players will lead him or her to victory. Players gain points for the manager in different ways. Touchdowns, yards and catches, for example, are all worth different values for the manager, and every week, the manager competes against a different manager in their league to score the most points.</p>
+<p>The position that scores the most points is typically the quarterback. Many managers try to draft quarterbacks that put up good stats such as Patrick Mahomes or Josh Allen in the early rounds, but in 2022, there was a quarterback who outperformed everyone else in many ways that led many managers to the fantasy playoffs.</p>
+<p>When it comes to the ideal fantasy quarterback, athleticism and the ability to both pass and run the ball are much more important than winning games for their team. In fact, whether players’ NFL teams win or lose is irrelevant toward fantasy points. NFL players, and quarterbacks especially, cannot play forever, especially with good fantasy stats. In 2022, the top four point scoring quarterbacks in fantasy football were all under the age of 28, and they outscored the rest of the field significantly.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -343,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"How did quarterback perform each game?"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span> <span class="st">"Hurts lead all quarterbacks in fantasy points per game in 2022."</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span> <span class="st">"Hurts led all quarterbacks in fantasy points per game in 2022."</span>,</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">""</span>, </span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"PPR Points per Game"</span>,</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Source: Football Reference | By Greg Johnson"</span>) <span class="sc">+</span> </span>
@@ -361,7 +361,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Why did Hurts lead all quarterbacks in fantasy points per game? He is not as flashy as Mahomes or Allen in terms of passing yards and touchdowns after all. </p>
-<p>What brought Hurts over the hump in points per game was leading all quarterbacks in rushing touchdowns and only throwing six interceptions on the season. These stats can make or break a quarterback’s week in fantasy, and Hurts is one of only two quarterbacks (the other being the New York Giants’ Daniel Jones) to be in the top 6 of both stats.</p>
+<p>What brought Hurts over the hump in points per game was leading all quarterbacks in rushing touchdowns and only throwing six interceptions on the season. These two stats can make or break a quarterback’s week in fantasy, and Hurts is one of only two quarterbacks (the other being the New York Giants’ Daniel Jones) to be in the top six of both stats.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -376,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">data=</span>jh, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Player, RushTD), <span class="at">weight=</span>RushTD), <span class="at">fill=</span><span class="st">"#004C54"</span>) <span class="sc">+</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Jalen Hurts puts up great fantasy stats"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span> <span class="st">"He lead quarterbacks in rushing touchdowns and was third least in interceptions."</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span> <span class="st">"He led quarterbacks in rushing touchdowns and was third least in interceptions."</span>,</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">""</span>, </span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Rush TD</span><span class="sc">\n</span><span class="st">"</span>,</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">""</span>) <span class="sc">+</span> </span>
