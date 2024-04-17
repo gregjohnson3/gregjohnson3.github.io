@@ -46,7 +46,7 @@
     "href": "posts/welcome/index.html",
     "title": "Welcome To My Blog",
     "section": "",
-    "text": "Hello, my name is Greg Johnson. I am a UNL sports media and communication and broadcasting double major with minors in athletic coaching and music. I am a huge data and numbers fan, so this blog will be full of stats and findings. Enjoy!\n{out.width = “50%”}\n{out.width = “50%”} {out.width = “50%”}"
+    "text": "Hello, my name is Greg Johnson. I am a UNL sports media and communication and broadcasting double major with minors in athletic coaching and music. I am a huge data and numbers fan, so this blog will be full of stats and findings. Enjoy!\n{width = “50%”}\n{width = “50%”} {width = “50%”}"
   },
   {
     "objectID": "posts/using-code-to-predict-the-march-madness-bracket-2024/index.html",
