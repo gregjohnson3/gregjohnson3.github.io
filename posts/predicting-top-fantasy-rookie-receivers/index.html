@@ -214,7 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>Some introductory text here that talks about what we’re doing – making a top 10 list for fantasy rookie wide receivers. Talk about your choices for inputs in the most generic way – looking at where they were drafted, who they were drafted by and what they did in college – and then rub some doubt on it. Can’t know if they’ll be injured, can’t know if they’ll work out or fit in, but given what we do know now, here’s our best guess at what they’ll do etc. etc.</p>
+<p>Every fall, fantasy football managers across the world always hit and miss on rookie wide receivers being added to the league. Here is a statistical model that values college production, as well as current NFL team situations, to predict what rookie wide receivers will produce the biggest point value for a fantasy team this fall.</p>
 <p>So who are the top 10?</p>
 <div class="cell">
 <details>
@@ -356,169 +356,172 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>    rolling_mean_passing_tds,</span>
 <span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>    ppr,</span>
 <span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>    rolling_mean_td_percent,</span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>    rolling_mean_cmp</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">nfl_team =</span> nfl_team.x</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>player_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(wrmodelingselected, <span class="at">prop =</span> .<span class="dv">8</span>)</span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>player_train <span class="ot">&lt;-</span> <span class="fu">training</span>(player_split)</span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>player_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(player_split)</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>    rolling_mean_cmp,</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>    receiving_yds,</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>    receiving_td,</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>    receiving_ypr</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">nfl_team =</span> nfl_team.x</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>player_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(wrmodelingselected, <span class="at">prop =</span> .<span class="dv">8</span>)</span>
 <span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>player_recipe <span class="ot">&lt;-</span> </span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(ppr <span class="sc">~</span> ., <span class="at">data =</span> player_train) <span class="sc">|&gt;</span> </span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(player, season, nfl_team, <span class="at">new_role =</span> <span class="st">"ID"</span>)</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>linear_mod <span class="ot">&lt;-</span> </span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>linear_workflow <span class="ot">&lt;-</span> </span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(linear_mod) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(player_recipe)</span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>linear_fit <span class="ot">&lt;-</span> </span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>  linear_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> player_train)</span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the prediction for this season. The NFL team names are a mess because of choices made by the picks data provider. They just list them by city name, which creates problems in Los Angeles and New York. </span></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>wrpicks <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="at">year =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">"Wide Receiver"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">college_year =</span> year <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">college_athlete_id =</span> <span class="fu">as.character</span>(college_athlete_id)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nfl_team =</span> <span class="fu">case_when</span>(</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Arizona"</span> <span class="sc">~</span> <span class="st">"Arizona Cardinals"</span>,</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Atlanta"</span> <span class="sc">~</span> <span class="st">"Atlanta Falcons"</span>,</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Baltimore"</span> <span class="sc">~</span> <span class="st">"Baltimore Ravens"</span>,</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Buffalo"</span> <span class="sc">~</span> <span class="st">"Buffalo Bills"</span>,</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Carolina"</span> <span class="sc">~</span> <span class="st">"Carolina Panthers"</span>,</span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Chicago"</span> <span class="sc">~</span> <span class="st">"Chicago Bears"</span>,</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Cincinnati"</span> <span class="sc">~</span> <span class="st">"Cincinnati Bengals"</span>,</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Cleveland"</span> <span class="sc">~</span> <span class="st">"Cleveland Browns"</span>,</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Dallas"</span> <span class="sc">~</span> <span class="st">"Dallas Cowboys"</span>,</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Denver"</span> <span class="sc">~</span> <span class="st">"Denver Broncos"</span>,</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Detroit"</span> <span class="sc">~</span> <span class="st">"Detroit Lions"</span>,</span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Green Bay"</span> <span class="sc">~</span> <span class="st">"Green Bay Packers"</span>,</span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Houston"</span> <span class="sc">~</span> <span class="st">"Houston Texans"</span>,</span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Indianapolis"</span> <span class="sc">~</span> <span class="st">"Indianapolis Colts"</span>,</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Jacksonville"</span> <span class="sc">~</span> <span class="st">"Jacksonville Jaguars"</span>,</span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Kansas City"</span> <span class="sc">~</span> <span class="st">"Kansas City Chiefs"</span>,</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Ladd McConkey"</span> <span class="sc">~</span> <span class="st">"Los Angeles Chargers"</span>, </span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Brenden Rice"</span> <span class="sc">~</span> <span class="st">"Los Angeles Chargers"</span>, </span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Cornelius Johnson"</span> <span class="sc">~</span> <span class="st">"Los Angeles Chargers"</span>,</span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Jordan Whittington"</span> <span class="sc">~</span> <span class="st">"Los Angeles Rams"</span>, </span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Las Vegas"</span> <span class="sc">~</span> <span class="st">"Las Vegas Raiders"</span>,</span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Miami"</span> <span class="sc">~</span> <span class="st">"Miami Dolphins"</span>,  </span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Minnesota"</span> <span class="sc">~</span> <span class="st">"Minnesota Vikings"</span>,</span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"New Orleans"</span> <span class="sc">~</span> <span class="st">"New Orleans Saints"</span>,</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"New England"</span> <span class="sc">~</span> <span class="st">"New England Patriots"</span>,</span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Malik Nabers"</span> <span class="sc">~</span> <span class="st">"New York Giants"</span>,</span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"New York"</span> <span class="sc">~</span> <span class="st">"New York Jets"</span>,</span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Philadelphia"</span> <span class="sc">~</span> <span class="st">"Philadelphia Eagles"</span>,</span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Pittsburgh"</span> <span class="sc">~</span> <span class="st">"Pittsburgh Steelers"</span>,</span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Seattle"</span> <span class="sc">~</span> <span class="st">"Seattle Seahawks"</span>,</span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"San Francisco"</span> <span class="sc">~</span> <span class="st">"San Francisco 49ers"</span>,</span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"St Louis"</span> <span class="sc">~</span> <span class="st">"Los Angeles Rams"</span>,</span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Tampa Bay"</span> <span class="sc">~</span> <span class="st">"Tampa Bay Buccaneers"</span>,</span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Tennessee"</span> <span class="sc">~</span> <span class="st">"Tennessee Titans"</span>,</span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Washington"</span> <span class="sc">~</span> <span class="st">"Washington Commanders"</span>,</span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>wrstats <span class="ot">&lt;-</span> <span class="fu">cfbd_stats_season_player</span>(<span class="dv">2023</span>, <span class="at">category =</span> <span class="st">"receiving"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">season =</span> <span class="dv">2023</span>)</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>player_train <span class="ot">&lt;-</span> <span class="fu">training</span>(player_split)</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>player_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(player_split)</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>player_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(ppr <span class="sc">~</span> ., <span class="at">data =</span> player_train) <span class="sc">|&gt;</span> </span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(player, season, nfl_team, <span class="at">new_role =</span> <span class="st">"ID"</span>)</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>linear_mod <span class="ot">&lt;-</span> </span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>linear_workflow <span class="ot">&lt;-</span> </span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(linear_mod) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(player_recipe)</span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>linear_fit <span class="ot">&lt;-</span> </span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>  linear_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> player_train)</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the prediction for this season. The NFL team names are a mess because of choices made by the picks data provider. They just list them by city name, which creates problems in Los Angeles and New York. </span></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>wrpicks <span class="ot">&lt;-</span> <span class="fu">cfbd_draft_picks</span>(<span class="at">year =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">"Wide Receiver"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">college_year =</span> year <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">college_athlete_id =</span> <span class="fu">as.character</span>(college_athlete_id)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nfl_team =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Arizona"</span> <span class="sc">~</span> <span class="st">"Arizona Cardinals"</span>,</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Atlanta"</span> <span class="sc">~</span> <span class="st">"Atlanta Falcons"</span>,</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Baltimore"</span> <span class="sc">~</span> <span class="st">"Baltimore Ravens"</span>,</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Buffalo"</span> <span class="sc">~</span> <span class="st">"Buffalo Bills"</span>,</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Carolina"</span> <span class="sc">~</span> <span class="st">"Carolina Panthers"</span>,</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Chicago"</span> <span class="sc">~</span> <span class="st">"Chicago Bears"</span>,</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Cincinnati"</span> <span class="sc">~</span> <span class="st">"Cincinnati Bengals"</span>,</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Cleveland"</span> <span class="sc">~</span> <span class="st">"Cleveland Browns"</span>,</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Dallas"</span> <span class="sc">~</span> <span class="st">"Dallas Cowboys"</span>,</span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Denver"</span> <span class="sc">~</span> <span class="st">"Denver Broncos"</span>,</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Detroit"</span> <span class="sc">~</span> <span class="st">"Detroit Lions"</span>,</span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Green Bay"</span> <span class="sc">~</span> <span class="st">"Green Bay Packers"</span>,</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Houston"</span> <span class="sc">~</span> <span class="st">"Houston Texans"</span>,</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Indianapolis"</span> <span class="sc">~</span> <span class="st">"Indianapolis Colts"</span>,</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Jacksonville"</span> <span class="sc">~</span> <span class="st">"Jacksonville Jaguars"</span>,</span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Kansas City"</span> <span class="sc">~</span> <span class="st">"Kansas City Chiefs"</span>,</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Ladd McConkey"</span> <span class="sc">~</span> <span class="st">"Los Angeles Chargers"</span>, </span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Brenden Rice"</span> <span class="sc">~</span> <span class="st">"Los Angeles Chargers"</span>, </span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Cornelius Johnson"</span> <span class="sc">~</span> <span class="st">"Los Angeles Chargers"</span>,</span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Jordan Whittington"</span> <span class="sc">~</span> <span class="st">"Los Angeles Rams"</span>, </span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Las Vegas"</span> <span class="sc">~</span> <span class="st">"Las Vegas Raiders"</span>,</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Miami"</span> <span class="sc">~</span> <span class="st">"Miami Dolphins"</span>,  </span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Minnesota"</span> <span class="sc">~</span> <span class="st">"Minnesota Vikings"</span>,</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"New Orleans"</span> <span class="sc">~</span> <span class="st">"New Orleans Saints"</span>,</span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"New England"</span> <span class="sc">~</span> <span class="st">"New England Patriots"</span>,</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a>    name <span class="sc">==</span> <span class="st">"Malik Nabers"</span> <span class="sc">~</span> <span class="st">"New York Giants"</span>,</span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"New York"</span> <span class="sc">~</span> <span class="st">"New York Jets"</span>,</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Philadelphia"</span> <span class="sc">~</span> <span class="st">"Philadelphia Eagles"</span>,</span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Pittsburgh"</span> <span class="sc">~</span> <span class="st">"Pittsburgh Steelers"</span>,</span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Seattle"</span> <span class="sc">~</span> <span class="st">"Seattle Seahawks"</span>,</span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"San Francisco"</span> <span class="sc">~</span> <span class="st">"San Francisco 49ers"</span>,</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"St Louis"</span> <span class="sc">~</span> <span class="st">"Los Angeles Rams"</span>,</span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Tampa Bay"</span> <span class="sc">~</span> <span class="st">"Tampa Bay Buccaneers"</span>,</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Tennessee"</span> <span class="sc">~</span> <span class="st">"Tennessee Titans"</span>,</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>    nfl_team <span class="sc">==</span> <span class="st">"Washington"</span> <span class="sc">~</span> <span class="st">"Washington Commanders"</span>,</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>  ))</span>
 <span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>wrpicksselected <span class="ot">&lt;-</span> wrpicks <span class="sc">|&gt;</span> </span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>    college_athlete_id,</span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>    nfl_athlete_id,</span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>    college_id,</span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>    name,</span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>    college_team, </span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>    college_conference,</span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>    nfl_team, </span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>    year,</span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>    college_year,</span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>    overall,</span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>    pre_draft_grade</span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>wrstatsselected <span class="ot">&lt;-</span> wrstats <span class="sc">|&gt;</span> </span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>    athlete_id,</span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>    season,</span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>    receiving_yds,</span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>    receiving_td,</span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>    receiving_ypr</span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a>wrpicksstats <span class="ot">&lt;-</span> wrpicksselected <span class="sc">|&gt;</span> </span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(wrstatsselected, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"college_athlete_id"</span><span class="ot">=</span><span class="st">"athlete_id"</span>, <span class="st">"college_year"</span> <span class="ot">=</span> <span class="st">"season"</span>))</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>wrstats <span class="ot">&lt;-</span> <span class="fu">cfbd_stats_season_player</span>(<span class="dv">2023</span>, <span class="at">category =</span> <span class="st">"receiving"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">season =</span> <span class="dv">2023</span>)</span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>wrpicksselected <span class="ot">&lt;-</span> wrpicks <span class="sc">|&gt;</span> </span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>    college_athlete_id,</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>    nfl_athlete_id,</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>    college_id,</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>    name,</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>    college_team, </span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>    college_conference,</span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>    nfl_team, </span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>    year,</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>    college_year,</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>    overall,</span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>    pre_draft_grade</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>wrstatsselected <span class="ot">&lt;-</span> wrstats <span class="sc">|&gt;</span> </span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>    athlete_id,</span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>    season,</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>    receiving_yds,</span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>    receiving_td,</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a>    receiving_ypr</span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>wrmodeling <span class="ot">&lt;-</span> wrpicksstats <span class="sc">|&gt;</span></span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(nflpassingselected, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"college_year"</span><span class="ot">=</span><span class="st">"season"</span>, <span class="st">"nfl_team"</span><span class="ot">=</span><span class="st">"nfl_team"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>    year,</span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>    name,</span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>    nfl_team,</span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>    overall,</span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>    rolling_mean_passing_yards,</span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>    rolling_mean_passing_tds,</span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>    rolling_mean_td_percent,</span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>    rolling_mean_cmp,</span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>    receiving_yds,</span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>    receiving_td,</span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>    receiving_ypr</span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> name,</span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>    <span class="at">season =</span> year</span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>linearpredict <span class="ot">&lt;-</span> </span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>  linear_fit <span class="sc">%&gt;%</span> </span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> wrmodeling) <span class="sc">%&gt;%</span></span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(wrmodeling) </span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="co"># now that we have predictions, make the table</span></span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>linearpredict <span class="sc">|&gt;</span> </span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(player, nfl_team, overall, .pred) <span class="sc">|&gt;</span> </span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>.pred) <span class="sc">|&gt;</span> </span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(.pred)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> <span class="st">"Player"</span>,</span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>    <span class="at">nfl_team =</span> <span class="st">"Team"</span>,</span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>    <span class="at">overall =</span> <span class="st">"Pick"</span>,</span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>    <span class="at">.pred =</span> <span class="st">"Predicted fantasy points"</span></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>  )  <span class="sc">|&gt;</span></span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Predicting the top fantasy rookie wide receivers"</span>,</span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Using draft grades, where they were drafted and who they were drafted by, these receivers could be the most valuable rookie wide receiver for your fantasy team this season. Call the predicted points a safe bet -- an average outcome -- not a ceiling."</span></span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>wrpicksstats <span class="ot">&lt;-</span> wrpicksselected <span class="sc">|&gt;</span> </span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(wrstatsselected, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"college_athlete_id"</span><span class="ot">=</span><span class="st">"athlete_id"</span>, <span class="st">"college_year"</span> <span class="ot">=</span> <span class="st">"season"</span>))</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>wrmodeling <span class="ot">&lt;-</span> wrpicksstats <span class="sc">|&gt;</span></span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(nflpassingselected, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"college_year"</span><span class="ot">=</span><span class="st">"season"</span>, <span class="st">"nfl_team"</span><span class="ot">=</span><span class="st">"nfl_team"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>    year,</span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>    name,</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>    nfl_team,</span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>    overall,</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>    rolling_mean_passing_yards,</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>    rolling_mean_passing_tds,</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>    rolling_mean_td_percent,</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>    rolling_mean_cmp,</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>    receiving_yds,</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>    receiving_td,</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>    receiving_ypr</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> name,</span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>    <span class="at">season =</span> year</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>linearpredict <span class="ot">&lt;-</span> </span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>  linear_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> wrmodeling) <span class="sc">%&gt;%</span></span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(wrmodeling) </span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a><span class="co"># now that we have predictions, make the table</span></span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>linearpredict <span class="sc">|&gt;</span> </span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(player, nfl_team, overall, .pred) <span class="sc">|&gt;</span> </span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, <span class="at">wt=</span>.pred) <span class="sc">|&gt;</span> </span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(.pred)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>    <span class="at">player =</span> <span class="st">"Player"</span>,</span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>    <span class="at">nfl_team =</span> <span class="st">"Team"</span>,</span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>    <span class="at">overall =</span> <span class="st">"Pick"</span>,</span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>    <span class="at">.pred =</span> <span class="st">"Predicted PPR fantasy points"</span></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a>  )  <span class="sc">|&gt;</span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Predicting the top fantasy rookie wide receivers"</span>,</span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Using draft grades, where they were drafted and who they were drafted by, these receivers could be the most valuable rookie wide receiver for your fantasy team this season. Call the predicted points a safe bet -- an average outcome -- not a ceiling."</span></span>
 <span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"**By:** Greg Johnson  |  **Source:** CFDB, Pro-Football Reference"</span>)</span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">tab_style</span>(</span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
 <span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
-<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>     )</span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
-<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"**By:** Greg Johnson  |  **Source:** CFDB, Pro-Football Reference"</span>)</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
@@ -947,50 +950,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold;" scope="col" id="Player">Player</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold;" scope="col" id="Team">Team</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold;" scope="col" id="Pick">Pick</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold;" scope="col" id="Predicted fantasy points">Predicted fantasy points</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #000000; font-size: 12; font-weight: bold;" scope="col" id="Predicted PPR fantasy points">Predicted PPR fantasy points</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="player" class="gt_row gt_left">Brian Thomas Jr.</td>
-<td headers="nfl_team" class="gt_row gt_left">Jacksonville Jaguars</td>
-<td headers="overall" class="gt_row gt_right">23</td>
-<td headers=".pred" class="gt_row gt_right">127.2986</td></tr>
-    <tr><td headers="player" class="gt_row gt_left gt_striped">Xavier Worthy</td>
-<td headers="nfl_team" class="gt_row gt_left gt_striped">Kansas City Chiefs</td>
-<td headers="overall" class="gt_row gt_right gt_striped">28</td>
-<td headers=".pred" class="gt_row gt_right gt_striped">127.2479</td></tr>
-    <tr><td headers="player" class="gt_row gt_left">Ricky Pearsall</td>
-<td headers="nfl_team" class="gt_row gt_left">San Francisco 49ers</td>
-<td headers="overall" class="gt_row gt_right">31</td>
-<td headers=".pred" class="gt_row gt_right">124.8541</td></tr>
-    <tr><td headers="player" class="gt_row gt_left gt_striped">Marvin Harrison Jr.</td>
-<td headers="nfl_team" class="gt_row gt_left gt_striped">Arizona Cardinals</td>
-<td headers="overall" class="gt_row gt_right gt_striped">4</td>
-<td headers=".pred" class="gt_row gt_right gt_striped">124.6539</td></tr>
+    <tr><td headers="player" class="gt_row gt_left">Xavier Worthy</td>
+<td headers="nfl_team" class="gt_row gt_left">Kansas City Chiefs</td>
+<td headers="overall" class="gt_row gt_right">28</td>
+<td headers=".pred" class="gt_row gt_right">132.0069</td></tr>
+    <tr><td headers="player" class="gt_row gt_left gt_striped">Ricky Pearsall</td>
+<td headers="nfl_team" class="gt_row gt_left gt_striped">San Francisco 49ers</td>
+<td headers="overall" class="gt_row gt_right gt_striped">31</td>
+<td headers=".pred" class="gt_row gt_right gt_striped">126.3248</td></tr>
     <tr><td headers="player" class="gt_row gt_left">Malik Nabers</td>
 <td headers="nfl_team" class="gt_row gt_left">New York Giants</td>
 <td headers="overall" class="gt_row gt_right">6</td>
-<td headers=".pred" class="gt_row gt_right">121.8582</td></tr>
-    <tr><td headers="player" class="gt_row gt_left gt_striped">Keon Coleman</td>
-<td headers="nfl_team" class="gt_row gt_left gt_striped">Buffalo Bills</td>
-<td headers="overall" class="gt_row gt_right gt_striped">33</td>
-<td headers=".pred" class="gt_row gt_right gt_striped">120.9520</td></tr>
-    <tr><td headers="player" class="gt_row gt_left">Rome Odunze</td>
-<td headers="nfl_team" class="gt_row gt_left">Chicago Bears</td>
-<td headers="overall" class="gt_row gt_right">9</td>
-<td headers=".pred" class="gt_row gt_right">120.5894</td></tr>
+<td headers=".pred" class="gt_row gt_right">124.9170</td></tr>
+    <tr><td headers="player" class="gt_row gt_left gt_striped">Rome Odunze</td>
+<td headers="nfl_team" class="gt_row gt_left gt_striped">Chicago Bears</td>
+<td headers="overall" class="gt_row gt_right gt_striped">9</td>
+<td headers=".pred" class="gt_row gt_right gt_striped">122.2718</td></tr>
+    <tr><td headers="player" class="gt_row gt_left">Marvin Harrison Jr.</td>
+<td headers="nfl_team" class="gt_row gt_left">Arizona Cardinals</td>
+<td headers="overall" class="gt_row gt_right">4</td>
+<td headers=".pred" class="gt_row gt_right">122.2656</td></tr>
+    <tr><td headers="player" class="gt_row gt_left gt_striped">Brian Thomas Jr.</td>
+<td headers="nfl_team" class="gt_row gt_left gt_striped">Jacksonville Jaguars</td>
+<td headers="overall" class="gt_row gt_right gt_striped">23</td>
+<td headers=".pred" class="gt_row gt_right gt_striped">122.1768</td></tr>
+    <tr><td headers="player" class="gt_row gt_left">Keon Coleman</td>
+<td headers="nfl_team" class="gt_row gt_left">Buffalo Bills</td>
+<td headers="overall" class="gt_row gt_right">33</td>
+<td headers=".pred" class="gt_row gt_right">119.7812</td></tr>
     <tr><td headers="player" class="gt_row gt_left gt_striped">Ladd McConkey</td>
 <td headers="nfl_team" class="gt_row gt_left gt_striped">Los Angeles Chargers</td>
 <td headers="overall" class="gt_row gt_right gt_striped">34</td>
-<td headers=".pred" class="gt_row gt_right gt_striped">119.8513</td></tr>
+<td headers=".pred" class="gt_row gt_right gt_striped">116.9061</td></tr>
     <tr><td headers="player" class="gt_row gt_left">Xavier Legette</td>
 <td headers="nfl_team" class="gt_row gt_left">Carolina Panthers</td>
 <td headers="overall" class="gt_row gt_right">32</td>
-<td headers=".pred" class="gt_row gt_right">111.4073</td></tr>
+<td headers=".pred" class="gt_row gt_right">115.8175</td></tr>
     <tr><td headers="player" class="gt_row gt_left gt_striped">Ja'Lynn Polk</td>
 <td headers="nfl_team" class="gt_row gt_left gt_striped">New England Patriots</td>
 <td headers="overall" class="gt_row gt_right gt_striped">37</td>
-<td headers=".pred" class="gt_row gt_right gt_striped">107.4718</td></tr>
+<td headers=".pred" class="gt_row gt_right gt_striped">107.9342</td></tr>
   </tbody>
   <tfoot class="gt_sourcenotes">
     <tr>
@@ -1002,45 +1005,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<section id="brian-thomas-jr.-jacksonville-jaguars-drafted-23" class="level2">
-<h2 class="anchored" data-anchor-id="brian-thomas-jr.-jacksonville-jaguars-drafted-23">1. Brian Thomas Jr., Jacksonville Jaguars, Drafted #23</h2>
-<p>Thomas led the nation with 17 touchdown receptions last season. With the Jaguars losing their number one yards and touchdowns leader from last year in Calvin Ridley, look for alot of Trevor Lawrence passes being thrown Thomas’ way.</p>
-</section>
 <section id="xavier-worthy-kansas-city-chiefs-drafted-28" class="level2">
-<h2 class="anchored" data-anchor-id="xavier-worthy-kansas-city-chiefs-drafted-28">2. Xavier Worthy, Kansas City Chiefs, Drafted #28</h2>
-<p>The fastset rookie in NFL history is looking to fit great with the Chiefs high flying offense. With last year’s leading receiver Rashee Rice in some legal trouble, Worthy could be a regular player in the rotation come game one.</p>
+<h2 class="anchored" data-anchor-id="xavier-worthy-kansas-city-chiefs-drafted-28">1. Xavier Worthy, Kansas City Chiefs, Drafted #28</h2>
+<p>The fastset rookie in NFL history is looking to fit great with the Chiefs high flying offense. With last year’s leading receiver Rashee Rice in some legal trouble, Worthy could be a regular player in the rotation come week one.</p>
 </section>
 <section id="ricky-pearsall-san-francisco-49ers-drafted-31" class="level2">
-<h2 class="anchored" data-anchor-id="ricky-pearsall-san-francisco-49ers-drafted-31">3. Ricky Pearsall, San Francisco 49ers, Drafted #31</h2>
+<h2 class="anchored" data-anchor-id="ricky-pearsall-san-francisco-49ers-drafted-31">2. Ricky Pearsall, San Francisco 49ers, Drafted #31</h2>
 <p>The 49ers led the league in yards per attempt and were second in total passing yards in 2023. The well rounded receiver out of Florida might not start right away, but after some growth with the team, he could be a huge factor later in the season.</p>
 </section>
-<section id="marvin-harrison-jr.-arizona-cardinals-drafted-4" class="level2">
-<h2 class="anchored" data-anchor-id="marvin-harrison-jr.-arizona-cardinals-drafted-4">4. Marvin Harrison Jr., Arizona Cardinals, Drafted #4</h2>
-<p>The Ohio State standout looks to be a strong add to a team who ranked in the bottom 10 in passing touchdowns, yards per attempt and passing yards last year. Harrison should be a lock with the team. The bigger question however is will the team be able to get itslef together to give Harrison success.</p>
-</section>
 <section id="malik-nabers-new-york-giants-drafted-6" class="level2">
-<h2 class="anchored" data-anchor-id="malik-nabers-new-york-giants-drafted-6">5. Malik Nabers, New York Giants, Drafted #6</h2>
+<h2 class="anchored" data-anchor-id="malik-nabers-new-york-giants-drafted-6">3. Malik Nabers, New York Giants, Drafted #6</h2>
 <p>LSU’s career leader in receptions and receiving yards heads to a struggling Giants team. Inconsistent quarterback play may hurt Nabers’ fantasy success.</p>
 </section>
-<section id="keon-coleman-buffalo-bills-drafted-33" class="level2">
-<h2 class="anchored" data-anchor-id="keon-coleman-buffalo-bills-drafted-33">6. Keon Coleman, Buffalo Bills, Drafted #33</h2>
-<p>Two to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr.&nbsp;was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here.</p>
-</section>
 <section id="rome-odunze-chicago-bears-drafted-9" class="level2">
-<h2 class="anchored" data-anchor-id="rome-odunze-chicago-bears-drafted-9">7. Rome Odunze, Chicago Bears, Drafted #9</h2>
-<p>Two to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr.&nbsp;was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here.</p>
+<h2 class="anchored" data-anchor-id="rome-odunze-chicago-bears-drafted-9">4. Rome Odunze, Chicago Bears, Drafted #9</h2>
+<p>Odunze may fill the role of Darnell Mooney in the Bears offense. He will be catching passes from a rookie quarterback in Caleb Williams, which could result in a lot of variability through the season.</p>
 </section>
-<section id="ladd-mcconkey-los-angeles-chargers-drafted-34" class="level2">
-<h2 class="anchored" data-anchor-id="ladd-mcconkey-los-angeles-chargers-drafted-34">8. Ladd McConkey, Los Angeles Chargers, Drafted #34</h2>
-<p>Two to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr.&nbsp;was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here.</p>
+<section id="marvin-harrison-jr.-arizona-cardinals-drafted-4" class="level2">
+<h2 class="anchored" data-anchor-id="marvin-harrison-jr.-arizona-cardinals-drafted-4">5. Marvin Harrison Jr., Arizona Cardinals, Drafted #4</h2>
+<p>The Ohio State standout looks to be a strong add to a team who ranked in the bottom 10 in passing touchdowns, yards per attempt and passing yards last year. Harrison should be a lock with the team. The bigger question however is will the team be able to get itslef together to give Harrison success.</p>
 </section>
-<section id="xavier-legette-carolina-panthers-drafted-32" class="level2">
-<h2 class="anchored" data-anchor-id="xavier-legette-carolina-panthers-drafted-32">9. Xavier Legette, Carolina Panthers, Drafted #32</h2>
-<p>Two to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr.&nbsp;was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here.</p>
+<section id="brian-thomas-jr.-jacksonville-jaguars-drafted-23" class="level2">
+<h2 class="anchored" data-anchor-id="brian-thomas-jr.-jacksonville-jaguars-drafted-23">6. Brian Thomas Jr., Jacksonville Jaguars, Drafted #23</h2>
+<p>Thomas led the nation with 17 touchdown receptions last season. With the Jaguars losing their number one yards and touchdowns leader from last year in Calvin Ridley, look for a lot of Trevor Lawrence passes being thrown Thomas’ way.</p>
 </section>
-<section id="jalynn-polk-new-england-patriots-drafted-37" class="level2">
-<h2 class="anchored" data-anchor-id="jalynn-polk-new-england-patriots-drafted-37">10. Ja’Lynn Polk, New England Patriots, Drafted #37</h2>
-<p>Two to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr.&nbsp;was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here.</p>
+<section id="keon-coleman-buffalo-bills-drafted-33" class="level2">
+<h2 class="anchored" data-anchor-id="keon-coleman-buffalo-bills-drafted-33">7. Keon Coleman, Buffalo Bills, Drafted #33</h2>
+<p>Coleman is prime to be a key factor in the Bills offense with th departure of Stefon Diggs and Gabe Davis. Those two combines for nearly 50% of the Bills’ receiving touchdowns and yards, leaving much room for targets to fly Coleman’s way.</p>
 
 
 </section>
