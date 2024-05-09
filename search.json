@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Latest posts",
     "section": "",
-    "text": "Using linear regression to draft fantasy rookies\n\n\n\n\n\n\n\nfantasy football\n\n\ncode\n\n\nanalysis\n\n\nreceivers\n\n\n\n\n\n\n\n\n\n\n\nMay 8, 2024\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nUsing Code to Predict the 2024 March Madness Tournament\n\n\n\n\n\n\n\nncaa\n\n\nmachinelearning\n\n\nbasketball\n\n\n\n\n\n\n\n\n\n\n\nApr 15, 2024\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nJalen Hurts proved himself as a fantasy QB1 in 2022\n\n\n\n\n\n\n\nqbs\n\n\nppg\n\n\nHurts\n\n\n\n\n\n\n\n\n\n\n\nMay 7, 2023\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nThe Big Ten’s Short Lived 2023 March Madness\n\n\n\n\n\n\n\nppg\n\n\nsos\n\n\nsweetsixteen\n\n\n\n\n\n\n\n\n\n\n\nApr 16, 2023\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 20, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMar 17, 2023\n\n\nGreg Johnson\n\n\n\n\n\n\nNo matching items"
+    "text": "Using linear regression to draft fantasy rookies\n\n\n\n\n\n\n\nfantasy football\n\n\ncode\n\n\nanalysis\n\n\nreceivers\n\n\n\n\n\n\n\n\n\n\n\nMay 9, 2024\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nUsing Code to Predict the 2024 March Madness Tournament\n\n\n\n\n\n\n\nncaa\n\n\nmachinelearning\n\n\nbasketball\n\n\n\n\n\n\n\n\n\n\n\nApr 15, 2024\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nJalen Hurts proved himself as a fantasy QB1 in 2022\n\n\n\n\n\n\n\nqbs\n\n\nppg\n\n\nHurts\n\n\n\n\n\n\n\n\n\n\n\nMay 7, 2023\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nThe Big Ten’s Short Lived 2023 March Madness\n\n\n\n\n\n\n\nppg\n\n\nsos\n\n\nsweetsixteen\n\n\n\n\n\n\n\n\n\n\n\nApr 16, 2023\n\n\nGreg Johnson\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nMar 20, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMar 17, 2023\n\n\nGreg Johnson\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/best-fantasy-quarterback-is-jalen-hurts/index.html",
@@ -39,77 +39,56 @@
     "href": "posts/predicting-top-fantasy-rookie-receivers/index.html",
     "title": "Using linear regression to draft fantasy rookies",
     "section": "",
-    "text": "Some introductory text here that talks about what we’re doing – making a top 10 list for fantasy rookie wide receivers. Talk about your choices for inputs in the most generic way – looking at where they were drafted, who they were drafted by and what they did in college – and then rub some doubt on it. Can’t know if they’ll be injured, can’t know if they’ll work out or fit in, but given what we do know now, here’s our best guess at what they’ll do etc. etc.\nSo who are the top 10?"
-  },
-  {
-    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#brian-thomas-jr.-jacksonville-jaguars-drafted-23",
-    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#brian-thomas-jr.-jacksonville-jaguars-drafted-23",
-    "title": "Using linear regression to draft fantasy rookies",
-    "section": "1. Brian Thomas Jr., Jacksonville Jaguars, Drafted #23",
-    "text": "1. Brian Thomas Jr., Jacksonville Jaguars, Drafted #23\nThomas led the nation with 17 touchdown receptions last season. With the Jaguars losing their number one yards and touchdowns leader from last year in Calvin Ridley, look for alot of Trevor Lawrence passes being thrown Thomas’ way."
+    "text": "Every fall, fantasy football managers across the world always hit and miss on rookie wide receivers being added to the league. Here is a statistical model that values college production, as well as current NFL team situations, to predict what rookie wide receivers will produce the biggest point value for a fantasy team this fall.\nSo who are the top 10?"
   },
   {
     "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#xavier-worthy-kansas-city-chiefs-drafted-28",
     "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#xavier-worthy-kansas-city-chiefs-drafted-28",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "2. Xavier Worthy, Kansas City Chiefs, Drafted #28",
-    "text": "2. Xavier Worthy, Kansas City Chiefs, Drafted #28\nThe fastset rookie in NFL history is looking to fit great with the Chiefs high flying offense. With last year’s leading receiver Rashee Rice in some legal trouble, Worthy could be a regular player in the rotation come game one."
+    "section": "1. Xavier Worthy, Kansas City Chiefs, Drafted #28",
+    "text": "1. Xavier Worthy, Kansas City Chiefs, Drafted #28\nThe fastset rookie in NFL history is looking to fit great with the Chiefs high flying offense. With last year’s leading receiver Rashee Rice in some legal trouble, Worthy could be a regular player in the rotation come week one."
   },
   {
     "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#ricky-pearsall-san-francisco-49ers-drafted-31",
     "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#ricky-pearsall-san-francisco-49ers-drafted-31",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "3. Ricky Pearsall, San Francisco 49ers, Drafted #31",
-    "text": "3. Ricky Pearsall, San Francisco 49ers, Drafted #31\nThe 49ers led the league in yards per attempt and were second in total passing yards in 2023. The well rounded receiver out of Florida might not start right away, but after some growth with the team, he could be a huge factor later in the season."
-  },
-  {
-    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#marvin-harrison-jr.-arizona-cardinals-drafted-4",
-    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#marvin-harrison-jr.-arizona-cardinals-drafted-4",
-    "title": "Using linear regression to draft fantasy rookies",
-    "section": "4. Marvin Harrison Jr., Arizona Cardinals, Drafted #4",
-    "text": "4. Marvin Harrison Jr., Arizona Cardinals, Drafted #4\nThe Ohio State standout looks to be a strong add to a team who ranked in the bottom 10 in passing touchdowns, yards per attempt and passing yards last year. Harrison should be a lock with the team. The bigger question however is will the team be able to get itslef together to give Harrison success."
+    "section": "2. Ricky Pearsall, San Francisco 49ers, Drafted #31",
+    "text": "2. Ricky Pearsall, San Francisco 49ers, Drafted #31\nThe 49ers led the league in yards per attempt and were second in total passing yards in 2023. The well rounded receiver out of Florida might not start right away, but after some growth with the team, he could be a huge factor later in the season."
   },
   {
     "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#malik-nabers-new-york-giants-drafted-6",
     "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#malik-nabers-new-york-giants-drafted-6",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "5. Malik Nabers, New York Giants, Drafted #6",
-    "text": "5. Malik Nabers, New York Giants, Drafted #6\nLSU’s career leader in receptions and receiving yards heads to a struggling Giants team. Inconsistent quarterback play may hurt Nabers’ fantasy success."
-  },
-  {
-    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#keon-coleman-buffalo-bills-drafted-33",
-    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#keon-coleman-buffalo-bills-drafted-33",
-    "title": "Using linear regression to draft fantasy rookies",
-    "section": "6. Keon Coleman, Buffalo Bills, Drafted #33",
-    "text": "6. Keon Coleman, Buffalo Bills, Drafted #33\nTwo to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr. was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here."
+    "section": "3. Malik Nabers, New York Giants, Drafted #6",
+    "text": "3. Malik Nabers, New York Giants, Drafted #6\nLSU’s career leader in receptions and receiving yards heads to a struggling Giants team. Inconsistent quarterback play may hurt Nabers’ fantasy success."
   },
   {
     "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#rome-odunze-chicago-bears-drafted-9",
     "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#rome-odunze-chicago-bears-drafted-9",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "7. Rome Odunze, Chicago Bears, Drafted #9",
-    "text": "7. Rome Odunze, Chicago Bears, Drafted #9\nTwo to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr. was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here."
+    "section": "4. Rome Odunze, Chicago Bears, Drafted #9",
+    "text": "4. Rome Odunze, Chicago Bears, Drafted #9\nOdunze may fill the role of Darnell Mooney in the Bears offense. He will be catching passes from a rookie quarterback in Caleb Williams, which could result in a lot of variability through the season."
   },
   {
-    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#ladd-mcconkey-los-angeles-chargers-drafted-34",
-    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#ladd-mcconkey-los-angeles-chargers-drafted-34",
+    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#marvin-harrison-jr.-arizona-cardinals-drafted-4",
+    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#marvin-harrison-jr.-arizona-cardinals-drafted-4",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "8. Ladd McConkey, Los Angeles Chargers, Drafted #34",
-    "text": "8. Ladd McConkey, Los Angeles Chargers, Drafted #34\nTwo to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr. was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here."
+    "section": "5. Marvin Harrison Jr., Arizona Cardinals, Drafted #4",
+    "text": "5. Marvin Harrison Jr., Arizona Cardinals, Drafted #4\nThe Ohio State standout looks to be a strong add to a team who ranked in the bottom 10 in passing touchdowns, yards per attempt and passing yards last year. Harrison should be a lock with the team. The bigger question however is will the team be able to get itslef together to give Harrison success."
   },
   {
-    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#xavier-legette-carolina-panthers-drafted-32",
-    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#xavier-legette-carolina-panthers-drafted-32",
+    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#brian-thomas-jr.-jacksonville-jaguars-drafted-23",
+    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#brian-thomas-jr.-jacksonville-jaguars-drafted-23",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "9. Xavier Legette, Carolina Panthers, Drafted #32",
-    "text": "9. Xavier Legette, Carolina Panthers, Drafted #32\nTwo to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr. was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here."
+    "section": "6. Brian Thomas Jr., Jacksonville Jaguars, Drafted #23",
+    "text": "6. Brian Thomas Jr., Jacksonville Jaguars, Drafted #23\nThomas led the nation with 17 touchdown receptions last season. With the Jaguars losing their number one yards and touchdowns leader from last year in Calvin Ridley, look for a lot of Trevor Lawrence passes being thrown Thomas’ way."
   },
   {
-    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#jalynn-polk-new-england-patriots-drafted-37",
-    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#jalynn-polk-new-england-patriots-drafted-37",
+    "objectID": "posts/predicting-top-fantasy-rookie-receivers/index.html#keon-coleman-buffalo-bills-drafted-33",
+    "href": "posts/predicting-top-fantasy-rookie-receivers/index.html#keon-coleman-buffalo-bills-drafted-33",
     "title": "Using linear regression to draft fantasy rookies",
-    "section": "10. Ja’Lynn Polk, New England Patriots, Drafted #37",
-    "text": "10. Ja’Lynn Polk, New England Patriots, Drafted #37\nTwo to three sentences about the receiver. Could include why you think the model ranked them high. For example, Marvin Harrison Jr. was injured his senior season, so if you don’t have him first and you used college stats to predict, that’s likely why. My table has the 23rd pick of the draft #2. Why? Going to a pass-happy team with a good young quarterback. That’s the kind of thing you’re putting here."
+    "section": "7. Keon Coleman, Buffalo Bills, Drafted #33",
+    "text": "7. Keon Coleman, Buffalo Bills, Drafted #33\nColeman is prime to be a key factor in the Bills offense with th departure of Stefon Diggs and Gabe Davis. Those two combines for nearly 50% of the Bills’ receiving touchdowns and yards, leaving much room for targets to fly Coleman’s way."
   },
   {
     "objectID": "posts/the-big-ten-sucks-at-march-madness/index.html",
